@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-forest: #0D2818;
+  --color-gold: #C87C2A;
+  --color-cream: #F5F0E8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #ffffff;
+  color: #0D2818;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Arabic text styling */
+.arabic {
+  font-family: 'Noto Kufi Arabic', 'Cairo', 'Tajawal', Arial, sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+.arabic-inline {
+  font-family: 'Noto Kufi Arabic', 'Cairo', 'Tajawal', Arial, sans-serif;
+}
+
+/* Geometric hero background pattern */
+.hero-pattern {
+  background-color: #0D2818;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(200, 124, 42, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(200, 124, 42, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(22, 56, 32, 0.4) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23C87C2A' stroke-width='0.3' stroke-opacity='0.12'%3E%3Cpolygon points='40 0 80 20 80 60 40 80 0 60 0 20'/%3E%3Cpolygon points='40 8 72 24 72 56 40 72 8 56 8 24'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Operator section pattern */
+.operator-pattern {
+  background-color: #081A10;
+  background-image:
+    radial-gradient(circle at 90% 10%, rgba(200, 124, 42, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(200, 124, 42, 0.08) 0%, transparent 45%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C87C2A' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Download section gradient */
+.download-gradient {
+  background: linear-gradient(160deg, #06120B 0%, #0D2818 35%, #163820 65%, #0D2818 100%);
+}
+
+/* Gold shimmer effect */
+.gold-shimmer {
+  background: linear-gradient(90deg, #C87C2A, #D9943E, #F0C87A, #D9943E, #C87C2A);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* Card hover effects */
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(200, 124, 42, 0.15);
+  border-color: rgba(200, 124, 42, 0.4);
+}
+
+/* App store button */
+.store-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.store-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(200, 124, 42, 0.4);
+}
+
+/* Divider with gold gradient */
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 124, 42, 0.6), transparent);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F0E8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C87C2A;
+  border-radius: 3px;
+}
+
+/* Focus states */
+:focus-visible {
+  outline: 2px solid #C87C2A;
+  outline-offset: 2px;
+}
+
+/* Mobile menu animation */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-menu-enter {
+  animation: slideDown 0.2s ease forwards;
+}
+
+/* Badge styling */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Number counter animation */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Testimonial card */
+.testimonial-card {
+  transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Section spacing utility */
+.section-padding {
+  padding: 96px 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 64px 0;
+  }
+}
