@@ -8,6 +8,15 @@ export const metadata: Metadata = {
   keywords:
     "community management, Saudi Arabia, residential, smart home, KSA, سابع جار, إدارة المجتمع, المملكة العربية السعودية",
   authors: [{ name: "Sevenhood" }],
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon:      [
+      { url: '/icon',       sizes: '32x32',   type: 'image/png' },
+      { url: '/icon.svg',   type: 'image/svg+xml' },
+    ],
+    apple:     [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
+    shortcut:  [{ url: '/icon', type: 'image/png' }],
+  },
   openGraph: {
     title: "Sevenhood — Premium Community Management Platform",
     description:
