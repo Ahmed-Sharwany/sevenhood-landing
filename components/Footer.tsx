@@ -16,19 +16,18 @@ export default function Footer() {
     setStatus("sending");
 
     try {
-      // Open a pre-filled email to hello@sevenhood.app
-      const subject = isAr
-        ? `طلب عرض توضيحي — ${form.name} | ${form.company}`
-        : `Demo Request — ${form.name} | ${form.company}`;
-      const body = isAr
-        ? `الاسم: ${form.name}\nالبريد الإلكتروني: ${form.email}\nالمجتمع / الشركة: ${form.company}`
-        : `Name: ${form.name}\nEmail: ${form.email}\nCommunity / Company: ${form.company}`;
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-      const mailtoLink = `mailto:hello@sevenhood.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoLink;
-
-      // Mark as success after short delay
-      setTimeout(() => setStatus("success"), 800);
+      if (res.ok) {
+        setStatus("success");
+        setForm({ name: "", email: "", company: "" });
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
@@ -120,25 +119,32 @@ export default function Footer() {
             {/* Right: form */}
             <div className="space-y-4">
               {status === "success" ? (
-                <div className={`p-8 rounded-2xl bg-green-500/10 border border-green-500/20 text-center space-y-3`}>
-                  <div className="text-4xl">✅</div>
-                  <p
-                    className="text-white font-semibold text-lg"
-                    style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
-                  >
-                    {isAr ? "شكراً لتواصلك!" : "Thanks for reaching out!"}
-                  </p>
-                  <p
-                    className="text-white/60 text-sm"
-                    style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
-                  >
-                    {isAr
-                      ? "فتحنا بريدك الإلكتروني بمعلوماتك. أرسل الرسالة وسنرد خلال 24 ساعة."
-                      : "Your email client has opened with your details. Send the message and we'll reply within 24 hours."}
-                  </p>
+                <div className="p-8 rounded-2xl bg-green-500/10 border border-green-500/20 text-center space-y-4">
+                  {/* Animated checkmark */}
+                  <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
+                    <svg className="w-8 h-8 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  </div>
+                  <div className="space-y-2">
+                    <p
+                      className="text-white font-bold text-xl"
+                      style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+                    >
+                      {isAr ? "شكراً لتواصلك معنا!" : "Thank you for contacting us!"}
+                    </p>
+                    <p
+                      className="text-white/60 text-sm leading-relaxed"
+                      style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+                    >
+                      {isAr
+                        ? "تلقّينا رسالتك بنجاح. سيتواصل معك فريقنا خلال 24 ساعة."
+                        : "We've received your message. Our team will get back to you within 24 hours."}
+                    </p>
+                  </div>
                   <button
                     onClick={() => setStatus("idle")}
-                    className="text-gold text-sm font-medium hover:text-gold-light transition-colors"
+                    className="text-gold text-sm font-medium hover:text-gold-light transition-colors underline underline-offset-2"
                     style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
                   >
                     {isAr ? "إرسال رسالة أخرى" : "Send another message"}
@@ -179,11 +185,31 @@ export default function Footer() {
                       className="sm:col-span-2 py-3.5 bg-gold hover:bg-gold-light disabled:opacity-70 text-white font-semibold rounded-xl transition-all duration-200 shadow-gold hover:shadow-gold-lg hover:-translate-y-0.5 disabled:cursor-not-allowed"
                       style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
                     >
-                      {status === "sending"
-                        ? (isAr ? "جارٍ الإرسال..." : "Opening email...")
-                        : (isAr ? "طلب عرض توضيحي ←" : "Request a Demo →")}
+                      {status === "sending" ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                          </svg>
+                          {isAr ? "جارٍ الإرسال..." : "Sending..."}
+                        </span>
+                      ) : (
+                        isAr ? "طلب عرض توضيحي ←" : "Request a Demo →"
+                      )}
                     </button>
                   </div>
+
+                  {status === "error" && (
+                    <p
+                      className="text-red-400 text-xs text-center"
+                      style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+                    >
+                      {isAr
+                        ? "حدث خطأ. يرجى المحاولة مجدداً أو التواصل عبر hello@sevenhood.app"
+                        : "Something went wrong. Please try again or email us at hello@sevenhood.app"}
+                    </p>
+                  )}
+
                   <p
                     className="text-white/30 text-xs text-center"
                     style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
