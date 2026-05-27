@@ -1,89 +1,97 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLang } from "@/contexts/LanguageContext";
 
-const testimonials = [
-  {
-    quote:
-      "Sevenhood completely transformed how we manage Roshn Front. Our residents love the app — maintenance requests are resolved 3x faster and we've seen a dramatic reduction in complaints.",
-    quoteAr:
-      "سابع جار غيّر طريقة إدارتنا لمشروع روشن فرونت بشكل جذري. سكاننا يحبون التطبيق — طلبات الصيانة تُحل بسرعة ثلاثة أضعاف.",
-    name: "Mohammed Al-Qahtani",
-    nameAr: "محمد القحطاني",
-    role: "Director of Operations",
-    company: "Roshn Group",
-    avatar: "M",
-    avatarBg: "bg-emerald-700",
-    rating: 5,
-  },
-  {
-    quote:
-      "The visitor management system alone has been a game-changer for our gated community. Residents issue passes in seconds and our security team has full visibility at all times.",
-    quoteAr:
-      "نظام إدارة الزوار وحده كان تحولاً جذرياً لمجتمعنا المسوّر. يصدر السكان التصاريح في ثوانٍ وفريق الأمن لديه رؤية كاملة في جميع الأوقات.",
-    name: "Sara Al-Hamad",
-    nameAr: "سارة الحمد",
-    role: "Community Manager",
-    company: "Diriyah Gate Authority",
-    avatar: "S",
-    avatarBg: "bg-blue-700",
-    rating: 5,
-  },
-  {
-    quote:
-      "We evaluated five platforms before choosing Sevenhood. The Arabic language support is flawless, the UI is premium, and the team's support has been exceptional throughout.",
-    quoteAr:
-      "قيّمنا خمس منصات قبل اختيار سابع جار. دعم اللغة العربية مثالي والواجهة فاخرة والفريق كان استثنائياً طوال الوقت.",
-    name: "Faisal Al-Otaibi",
-    nameAr: "فيصل العتيبي",
-    role: "VP Real Estate",
-    company: "PIF Communities",
-    avatar: "F",
-    avatarBg: "bg-purple-700",
-    rating: 5,
-  },
-  {
-    quote:
-      "As a resident, the app is simply beautiful. I book the gym, track my maintenance requests, and stay connected with my community all in one place. Nothing else compares.",
-    quoteAr:
-      "كساكن، التطبيق جميل ببساطة. أحجز الصالة الرياضية وأتابع طلباتي وأبقى متواصلاً مع مجتمعي — كل شيء في مكان واحد.",
-    name: "Noura Al-Rashidi",
-    nameAr: "نورة الرشيدي",
-    role: "Resident",
-    company: "AlUla Heritage Villas",
-    avatar: "N",
-    avatarBg: "bg-rose-700",
-    rating: 5,
-  },
+const pillars = {
+  EN: [
+    {
+      icon: "🇸🇦",
+      title: "Built for Saudi Arabia",
+      description:
+        "Designed from the ground up for the Kingdom's real estate landscape — aligned with Vision 2030, PDPL-compliant, and deeply rooted in Saudi culture and community values.",
+      color: "border-emerald-500/20",
+      glow: "from-emerald-500/10 to-transparent",
+    },
+    {
+      icon: "🌐",
+      title: "Genuinely Bilingual",
+      description:
+        "Not a translation — a native bilingual experience. Every screen, every notification, every interaction is crafted with equal care in both Arabic and English.",
+      color: "border-blue-500/20",
+      glow: "from-blue-500/10 to-transparent",
+    },
+    {
+      icon: "🔒",
+      title: "Enterprise-Grade Security",
+      description:
+        "Bank-level encryption, full PDPL compliance, and role-based access control. Your residents' data is protected with the highest standards in the industry.",
+      color: "border-gold/20",
+      glow: "from-gold/10 to-transparent",
+    },
+    {
+      icon: "🤖",
+      title: "AI-Powered Features",
+      description:
+        "The first community platform in KSA with built-in AI interior design — letting residents transform their spaces with a simple photo. Innovation built in, not bolted on.",
+      color: "border-pink-500/20",
+      glow: "from-pink-500/10 to-transparent",
+    },
+  ],
+  AR: [
+    {
+      icon: "🇸🇦",
+      title: "مصمّم للمملكة العربية السعودية",
+      description:
+        "بُني من الأساس ليخدم السوق العقاري في المملكة — متوافق مع رؤية 2030، ملتزم بنظام حماية البيانات الشخصية، ومتجذّر في ثقافة المجتمع السعودي وقيمه.",
+      color: "border-emerald-500/20",
+      glow: "from-emerald-500/10 to-transparent",
+    },
+    {
+      icon: "🌐",
+      title: "ثنائي اللغة حقيقياً",
+      description:
+        "ليست مجرد ترجمة — بل تجربة ثنائية اللغة أصيلة. كل شاشة وكل إشعار وكل تفاعل مصمَّم بعناية متساوية باللغتين العربية والإنجليزية.",
+      color: "border-blue-500/20",
+      glow: "from-blue-500/10 to-transparent",
+    },
+    {
+      icon: "🔒",
+      title: "أمان على مستوى المؤسسات",
+      description:
+        "تشفير بمستوى البنوك، امتثال كامل لنظام حماية البيانات الشخصية، وتحكم في الصلاحيات بالأدوار. بيانات سكانك محمية بأعلى معايير الصناعة.",
+      color: "border-gold/20",
+      glow: "from-gold/10 to-transparent",
+    },
+    {
+      icon: "🤖",
+      title: "مدعوم بالذكاء الاصطناعي",
+      description:
+        "أول منصة مجتمعية في المملكة تضم تصميماً داخلياً بالذكاء الاصطناعي — تتيح للسكان تحويل مساحاتهم بصورة واحدة فقط. ابتكار حقيقي، لا مجرد إضافة.",
+      color: "border-pink-500/20",
+      glow: "from-pink-500/10 to-transparent",
+    },
+  ],
+};
+
+const partners = [
+  "Roshn Group", "PIF", "KAFD", "Diriyah Gate", "NEOM", "AlUla",
 ];
-
-function StarRating({ count }: { count: number }) {
-  return (
-    <div className="flex gap-0.5">
-      {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} className="w-4 h-4 text-gold" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-        </svg>
-      ))}
-    </div>
-  );
-}
 
 export default function Testimonials() {
   const ref = useRef<HTMLDivElement>(null);
+  const { isAr } = useLang();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          ref.current
-            ?.querySelectorAll(".testi-animate")
-            .forEach((el, i) => {
-              setTimeout(() => {
-                el.classList.add("opacity-100", "translate-y-0");
-                el.classList.remove("opacity-0", "translate-y-10");
-              }, i * 100);
-            });
+          ref.current?.querySelectorAll(".trust-animate").forEach((el, i) => {
+            setTimeout(() => {
+              el.classList.add("opacity-100", "translate-y-0");
+              el.classList.remove("opacity-0", "translate-y-10");
+            }, i * 90);
+          });
         }
       },
       { threshold: 0.1 }
@@ -92,87 +100,162 @@ export default function Testimonials() {
     return () => observer.disconnect();
   }, []);
 
+  const pillarList = isAr ? pillars.AR : pillars.EN;
+
   return (
-    <section className="section-padding bg-cream" ref={ref}>
+    <section
+      className="section-padding bg-cream"
+      ref={ref}
+      dir={isAr ? "rtl" : "ltr"}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
         {/* Header */}
-        <div className="text-center mb-14 space-y-4">
-          <div className="testi-animate opacity-0 translate-y-10 transition-all duration-600">
+        <div className="text-center mb-16 space-y-4">
+          <div className="trust-animate opacity-0 translate-y-10 transition-all duration-600">
             <span className="badge bg-forest/8 border border-forest/15 text-forest/70">
-              <span className="text-gold">◆</span> Trusted Across KSA
+              <span className="text-gold">◆</span>
+              {isAr ? "ميزة سابع جار" : "The Sevenhood Difference"}
             </span>
           </div>
-          <div className="testi-animate opacity-0 translate-y-10 transition-all duration-600 space-y-2">
-            <h2 className="text-4xl lg:text-5xl font-bold text-forest leading-tight">
-              Loved by communities
-              <span className="block text-gold">across Saudi Arabia</span>
-            </h2>
+          <div className="trust-animate opacity-0 translate-y-10 transition-all duration-600">
+            {isAr ? (
+              <h2
+                className="text-4xl lg:text-5xl font-bold text-forest leading-tight"
+                style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
+              >
+                المنصة التي كانت
+                <span className="block text-gold">المملكة تنتظرها</span>
+              </h2>
+            ) : (
+              <h2 className="text-4xl lg:text-5xl font-bold text-forest leading-tight">
+                The platform Saudi Arabia
+                <span className="block text-gold">has been waiting for</span>
+              </h2>
+            )}
+          </div>
+          <div className="trust-animate opacity-0 translate-y-10 transition-all duration-600">
             <p
-              className="text-2xl text-forest/30 arabic"
-              style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
+              className="text-forest/60 text-lg max-w-2xl mx-auto leading-relaxed"
+              style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
             >
-              محبوب من المجتمعات في كل أنحاء المملكة
+              {isAr
+                ? "بُني سابع جار بمعايير عالمية، ليخدم السوق السعودي بعمق وأصالة. ليس منصة معرَّبة — بل منصة سعودية في جوهرها."
+                : "Sevenhood is built to global standards with Saudi Arabia at its core. Not a localised product — a Saudi-native platform from day one."}
             </p>
           </div>
         </div>
 
-        {/* Testimonials grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {testimonials.map((t, i) => (
+        {/* Pillars grid */}
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
+          {pillarList.map((pillar, i) => (
             <div
               key={i}
-              className="testi-animate testimonial-card opacity-0 translate-y-10 transition-all duration-600 bg-white rounded-3xl p-8 shadow-card border border-gray-100"
+              className={`trust-animate opacity-0 translate-y-10 transition-all duration-600 bg-white rounded-3xl p-8 border ${pillar.color} shadow-card hover:shadow-gold hover:-translate-y-1 transition-all duration-300 relative overflow-hidden ${isAr ? "text-right" : ""}`}
             >
-              {/* Rating */}
-              <StarRating count={t.rating} />
+              {/* Background glow */}
+              <div className={`absolute top-0 ${isAr ? "left-0" : "right-0"} w-48 h-48 bg-gradient-to-bl ${pillar.glow} rounded-full -translate-y-1/2 ${isAr ? "-translate-x-1/4" : "translate-x-1/4"} pointer-events-none`} />
 
-              {/* Quote */}
-              <blockquote className="mt-4 space-y-3">
-                <p className="text-forest/75 text-base leading-relaxed">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <p
-                  className="text-forest/40 text-sm leading-relaxed arabic border-t border-gray-100 pt-3"
-                  style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
-                >
-                  &ldquo;{t.quoteAr}&rdquo;
-                </p>
-              </blockquote>
-
-              {/* Author */}
-              <div className="mt-6 flex items-center gap-4">
-                <div
-                  className={`w-11 h-11 rounded-full ${t.avatarBg} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}
-                >
-                  {t.avatar}
+              <div className={`relative flex items-start gap-5 ${isAr ? "flex-row-reverse" : ""}`}>
+                <div className="w-14 h-14 rounded-2xl bg-forest/5 border border-forest/10 flex items-center justify-center text-3xl flex-shrink-0">
+                  {pillar.icon}
                 </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <p className="text-forest font-semibold text-sm">{t.name}</p>
-                    <span
-                      className="text-forest/40 text-xs arabic-inline"
-                      style={{
-                        fontFamily: "'Noto Kufi Arabic', Arial, sans-serif",
-                      }}
-                    >
-                      {t.nameAr}
-                    </span>
-                  </div>
-                  <p className="text-forest/50 text-xs">{t.role} · {t.company}</p>
+                <div className="space-y-2">
+                  <h3
+                    className="text-forest font-bold text-xl"
+                    style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+                  >
+                    {pillar.title}
+                  </h3>
+                  <p
+                    className="text-forest/60 text-sm leading-relaxed"
+                    style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+                  >
+                    {pillar.description}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Logo cloud */}
-        <div className="mt-14 testi-animate opacity-0 translate-y-10 transition-all duration-600">
-          <p className="text-center text-forest/40 text-sm mb-6 font-medium">
-            Trusted by Saudi Arabia&apos;s leading developers
+        {/* Early Access CTA Band */}
+        <div className="trust-animate opacity-0 translate-y-10 transition-all duration-600">
+          <div className="relative bg-forest rounded-3xl overflow-hidden">
+            {/* Background pattern */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gold/8 rounded-full -translate-y-1/2 translate-x-1/4 blur-2xl" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gold/5 rounded-full translate-y-1/2 -translate-x-1/4 blur-2xl" />
+            </div>
+
+            <div className={`relative px-8 py-10 flex flex-col md:flex-row items-center gap-8 ${isAr ? "md:flex-row-reverse text-right" : "justify-between"}`}>
+              <div className="space-y-3 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                  <span
+                    className="text-gold text-xs font-semibold uppercase tracking-widest"
+                    style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif", letterSpacing: 0 } : undefined}
+                  >
+                    {isAr ? "برنامج الوصول المبكر" : "Early Access Program"}
+                  </span>
+                </div>
+                {isAr ? (
+                  <h3
+                    className="text-2xl font-bold text-white"
+                    style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
+                  >
+                    كن من أوائل المجتمعات التي تعيش تجربة سابع جار
+                  </h3>
+                ) : (
+                  <h3 className="text-2xl font-bold text-white">
+                    Be among the first communities to experience Sevenhood
+                  </h3>
+                )}
+                <p
+                  className="text-white/60 leading-relaxed max-w-lg"
+                  style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+                >
+                  {isAr
+                    ? "نحن نتعاون مع عدد محدود من المجتمعات لبرنامج الوصول المبكر. تواصل معنا الآن لتضمن مكانك."
+                    : "We're partnering with a select number of communities for our early access program. Reach out now to secure your spot."}
+                </p>
+              </div>
+              <div className="flex-shrink-0">
+                <a
+                  href="#contact"
+                  className={`inline-flex items-center gap-3 px-8 py-4 bg-gold hover:bg-gold-light text-white font-semibold rounded-2xl transition-all duration-200 shadow-gold hover:shadow-gold-lg hover:-translate-y-0.5 ${isAr ? "flex-row-reverse" : ""}`}
+                  style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+                >
+                  {isAr ? "احجز مقعدك الآن" : "Reserve Your Spot"}
+                  <svg
+                    className={`w-4 h-4 ${isAr ? "rotate-180" : ""}`}
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M3 8h10M9 4l4 4-4 4" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Logo cloud — positioned developer communities */}
+        <div className="mt-14 trust-animate opacity-0 translate-y-10 transition-all duration-600">
+          <p
+            className="text-center text-forest/40 text-sm mb-6 font-medium"
+            style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+          >
+            {isAr ? "مصمَّم لمجتمعات المطورين الرائدين في المملكة" : "Designed for Saudi Arabia's leading developer communities"}
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {["Roshn Group", "PIF", "KAFD", "Diriyah Gate", "NEOM", "AlUla"].map((co) => (
-              <div key={co} className="px-5 py-2.5 rounded-xl bg-white border border-gray-200 text-forest/50 font-semibold text-sm hover:border-gold/30 hover:text-gold transition-all duration-200">
+          <div className="flex flex-wrap justify-center items-center gap-4">
+            {partners.map((co) => (
+              <div
+                key={co}
+                className="px-5 py-2.5 rounded-xl bg-white border border-gray-200 text-forest/50 font-semibold text-sm hover:border-gold/30 hover:text-gold transition-all duration-200"
+              >
                 {co}
               </div>
             ))}

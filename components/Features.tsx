@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLang } from "@/contexts/LanguageContext";
 
 const features = [
   {
     icon: "🏗️",
     en: {
       title: "Portfolio Management",
-      description:
-        "Manage your entire portfolio of projects, buildings, towers, and units from a single unified dashboard. Full visibility across all your assets.",
+      description: "Manage your entire portfolio of projects, buildings, towers, and units from a single unified dashboard. Full visibility across all your assets.",
     },
     ar: {
-      subtitle: "إدارة المشاريع",
-      description: "أدِر مشاريعك ومبانيك ووحداتك بالكامل من لوحة تحكم موحدة",
+      title: "إدارة المحافظ العقارية",
+      description: "أدِر مشاريعك ومبانيك وأبراجك ووحداتك بالكامل من لوحة تحكم موحدة — رؤية شاملة لجميع أصولك.",
     },
     color: "from-emerald-500/20 to-emerald-600/5",
     border: "border-emerald-500/20",
@@ -22,12 +22,11 @@ const features = [
     icon: "📅",
     en: {
       title: "Smart Bookings",
-      description:
-        "Reserve amenities — pools, gyms, meeting rooms, event halls — with intelligent conflict prevention and automated reminders.",
+      description: "Reserve amenities — pools, gyms, meeting rooms, event halls — with intelligent conflict prevention and automated reminders.",
     },
     ar: {
-      subtitle: "الحجوزات الذكية",
-      description: "احجز المرافق بسهولة مع منع التعارضات تلقائياً وتذكيرات فورية",
+      title: "الحجوزات الذكية",
+      description: "احجز المرافق بكل سهولة — المسابح والصالات والغرف — مع منع التعارضات تلقائياً وتذكيرات فورية.",
     },
     color: "from-blue-500/20 to-blue-600/5",
     border: "border-blue-500/20",
@@ -37,12 +36,11 @@ const features = [
     icon: "🔧",
     en: {
       title: "Maintenance Requests",
-      description:
-        "Submit, track, and resolve maintenance tickets in real-time. Photo uploads, priority levels, and technician assignment built in.",
+      description: "Submit, track, and resolve maintenance tickets in real-time. Photo uploads, priority levels, and technician assignment built in.",
     },
     ar: {
-      subtitle: "طلبات الصيانة",
-      description: "أرسل طلبات الصيانة وتابعها لحظة بلحظة مع رفع الصور وتحديد الأولويات",
+      title: "طلبات الصيانة",
+      description: "أرسل طلبات الصيانة وتابعها لحظة بلحظة — مع رفع الصور وتحديد الأولويات وتعيين الفنيين.",
     },
     color: "from-orange-500/20 to-orange-600/5",
     border: "border-orange-500/20",
@@ -52,12 +50,11 @@ const features = [
     icon: "👥",
     en: {
       title: "Community Hub",
-      description:
-        "Connect with neighbours, discover and join community events, share announcements, and build the social fabric of your community.",
+      description: "Connect with neighbours, discover and join community events, share announcements, and build the social fabric of your community.",
     },
     ar: {
-      subtitle: "مجتمع متصل",
-      description: "تواصل مع جيرانك وانضم للفعاليات وشارك في بناء مجتمع متماسك",
+      title: "مجتمع متصل",
+      description: "تواصل مع جيرانك، انضم للفعاليات وشارك الإعلانات — وابنِ روابط مجتمعية حقيقية.",
     },
     color: "from-purple-500/20 to-purple-600/5",
     border: "border-purple-500/20",
@@ -67,12 +64,11 @@ const features = [
     icon: "🔑",
     en: {
       title: "Visitor Access Control",
-      description:
-        "Issue digital visitor passes, manage gate access, track arrivals, and maintain full security logs for your community.",
+      description: "Issue digital visitor passes, manage gate access, track arrivals, and maintain full security logs for your community.",
     },
     ar: {
-      subtitle: "إدارة الزوار",
-      description: "أصدر تصاريح زيارة رقمية وأدِر البوابات بأمان تام وسجلات كاملة",
+      title: "إدارة الزوار",
+      description: "أصدر تصاريح زيارة رقمية، أدِر البوابات بأمان تام، وتتبّع الوصول مع سجلات أمنية كاملة.",
     },
     color: "from-gold/20 to-gold/5",
     border: "border-gold/20",
@@ -82,12 +78,11 @@ const features = [
     icon: "✨",
     en: {
       title: "AI Interior Design",
-      description:
-        "Transform your home with AI-powered interior design requests. Upload your space, describe your vision, get professional results.",
+      description: "Transform your home with AI-powered interior design. Upload your space, describe your vision, and get stunning professional results.",
     },
     ar: {
-      subtitle: "تصميم بالذكاء الاصطناعي",
-      description: "حوّل منزلك بطلبات التصميم الداخلي المدعومة بالذكاء الاصطناعي",
+      title: "تصميم بالذكاء الاصطناعي",
+      description: "حوّل منزلك بسحر الذكاء الاصطناعي — ارفع صورة مساحتك وصِف رؤيتك واحصل على نتائج مذهلة.",
     },
     color: "from-pink-500/20 to-pink-600/5",
     border: "border-pink-500/20",
@@ -97,14 +92,14 @@ const features = [
 
 export default function Features() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { isAr } = useLang();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const cards =
-              sectionRef.current?.querySelectorAll(".feature-animate");
+            const cards = sectionRef.current?.querySelectorAll(".feature-animate");
             cards?.forEach((card, i) => {
               setTimeout(() => {
                 card.classList.add("opacity-100", "translate-y-0");
@@ -116,32 +111,47 @@ export default function Features() {
       },
       { threshold: 0.1 }
     );
-
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="features" className="section-padding bg-white" ref={sectionRef}>
+    <section
+      id="features"
+      className="section-padding bg-white"
+      ref={sectionRef}
+      dir={isAr ? "rtl" : "ltr"}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 space-y-4">
-          <span className="badge bg-forest/8 border border-forest/15 text-forest/70 inline-flex">
-            <span className="text-gold">◆</span> Platform Features
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-bold text-forest leading-tight">
-            Everything your community
-            <span className="block text-gold">needs to thrive</span>
-          </h2>
+        <div className={`text-center mb-16 space-y-4 ${isAr ? "text-right" : ""}`}>
+          <div className="flex justify-center">
+            <span className="badge bg-forest/8 border border-forest/15 text-forest/70 inline-flex">
+              <span className="text-gold">◆</span>
+              {isAr ? "مميزات المنصة" : "Platform Features"}
+            </span>
+          </div>
+          {isAr ? (
+            <h2
+              className="text-4xl lg:text-5xl font-bold text-forest leading-tight text-center"
+              style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
+            >
+              كل ما يحتاجه مجتمعك
+              <span className="block text-gold">للازدهار والنجاح</span>
+            </h2>
+          ) : (
+            <h2 className="text-4xl lg:text-5xl font-bold text-forest leading-tight text-center">
+              Everything your community
+              <span className="block text-gold">needs to thrive</span>
+            </h2>
+          )}
           <p
-            className="text-2xl text-forest/30 font-light arabic"
-            style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
+            className="text-forest/60 text-lg max-w-2xl mx-auto leading-relaxed text-center"
+            style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
           >
-            كل ما يحتاجه مجتمعك للنجاح
-          </p>
-          <p className="text-forest/60 text-lg max-w-2xl mx-auto leading-relaxed">
-            Sevenhood brings together every tool your residents and management
-            team need — in one beautifully designed platform.
+            {isAr
+              ? "سابع جار يجمع كل الأدوات التي يحتاجها سكانك وفريق إدارتك — في منصة واحدة مصممة بإتقان."
+              : "Sevenhood brings together every tool your residents and management team need — in one beautifully designed platform."}
           </p>
         </div>
 
@@ -150,67 +160,62 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="feature-animate feature-card opacity-0 translate-y-10 transition-all duration-500 bg-white rounded-3xl p-7 border border-gray-100 shadow-card cursor-default"
+              className={`feature-animate feature-card opacity-0 translate-y-10 transition-all duration-500 bg-white rounded-3xl p-7 border border-gray-100 shadow-card cursor-default ${isAr ? "text-right" : ""}`}
             >
               {/* Icon */}
               <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} border ${feature.border} flex items-center justify-center text-2xl mb-5`}>
                 {feature.icon}
               </div>
 
-              {/* Title row */}
-              <div className="flex items-start justify-between gap-2 mb-3">
-                <h3 className="text-forest font-bold text-lg leading-tight">
-                  {feature.en.title}
-                </h3>
-                <span
-                  className={`text-xs font-semibold px-2 py-1 rounded-lg flex-shrink-0 ${feature.accent} arabic-inline`}
-                  style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
-                >
-                  {feature.ar.subtitle}
-                </span>
-              </div>
+              {/* Title */}
+              <h3
+                className="text-forest font-bold text-lg leading-tight mb-3"
+                style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+              >
+                {isAr ? feature.ar.title : feature.en.title}
+              </h3>
 
               {/* Description */}
-              <p className="text-forest/60 text-sm leading-relaxed mb-4">
-                {feature.en.description}
-              </p>
-
-              {/* Arabic description */}
               <p
-                className="text-forest/35 text-xs leading-relaxed arabic border-t border-gray-100 pt-3"
-                style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
+                className="text-forest/60 text-sm leading-relaxed"
+                style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
               >
-                {feature.ar.description}
+                {isAr ? feature.ar.description : feature.en.description}
               </p>
             </div>
           ))}
         </div>
 
         {/* Bottom CTA strip */}
-        <div className="mt-12 p-8 rounded-3xl bg-cream border border-gold/20 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className={`mt-12 p-8 rounded-3xl bg-cream border border-gold/20 flex flex-col md:flex-row items-center justify-between gap-6 ${isAr ? "md:flex-row-reverse text-right" : ""}`}>
           <div>
-            <h3 className="text-forest font-bold text-xl mb-1">
-              Ready to transform your community?
+            <h3
+              className="text-forest font-bold text-xl mb-1"
+              style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
+            >
+              {isAr ? "هل أنت مستعد لتحويل مجتمعك؟" : "Ready to transform your community?"}
             </h3>
             <p
-              className="text-forest/50 arabic"
-              style={{ fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" }}
+              className="text-forest/50 text-sm"
+              style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
             >
-              هل أنت مستعد لتحويل مجتمعك؟
+              {isAr ? "انضم إلى برنامج الوصول المبكر اليوم." : "Join the early access program today."}
             </p>
           </div>
-          <div className="flex gap-4 flex-shrink-0">
+          <div className={`flex gap-4 flex-shrink-0 ${isAr ? "flex-row-reverse" : ""}`}>
             <a
               href="#download"
               className="px-6 py-3 bg-forest text-white font-semibold rounded-xl hover:bg-forest-light transition-all duration-200 shadow-forest hover:-translate-y-0.5"
+              style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
             >
-              Download App
+              {isAr ? "حمّل التطبيق" : "Download App"}
             </a>
             <a
               href="#operators"
               className="px-6 py-3 border-2 border-forest/20 text-forest font-semibold rounded-xl hover:bg-forest/5 transition-all duration-200"
+              style={isAr ? { fontFamily: "'Noto Kufi Arabic', Arial, sans-serif" } : undefined}
             >
-              View Operator Demo
+              {isAr ? "للمشغلين" : "For Operators"}
             </a>
           </div>
         </div>
