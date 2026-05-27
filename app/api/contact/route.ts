@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Sevenhood Website <onboarding@resend.dev>",
+        from: "Sevenhood <noreply@sevenhood.app>",
         to: ["hello@sevenhood.app"],
         reply_to: email,
         subject: `Demo Request — ${name}${company ? ` | ${company}` : ""}`,
