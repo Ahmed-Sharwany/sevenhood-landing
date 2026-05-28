@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   authors: [{ name: "Sevenhood" }],
   manifest: "/manifest.webmanifest",
   icons: {
-    icon:      [
-      { url: '/icon',       sizes: '32x32',   type: 'image/png' },
-      { url: '/icon.svg',   type: 'image/svg+xml' },
+    icon:     [
+      { url: "/icon",     sizes: "32x32",   type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
     ],
-    apple:     [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
-    shortcut:  [{ url: '/icon', type: 'image/png' }],
+    apple:    [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+    shortcut: [{ url: "/icon", type: "image/png" }],
   },
   openGraph: {
     title: "Sevenhood — Premium Community Management Platform",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0D2818",
+  themeColor: "#0B0C0A",
 };
 
 export default function RootLayout({
@@ -53,7 +53,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>

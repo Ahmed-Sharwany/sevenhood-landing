@@ -1,6 +1,5 @@
 import { ImageResponse } from 'next/og'
 
-// Route segment config
 export const runtime = 'edge'
 export const size    = { width: 32, height: 32 }
 export const contentType = 'image/png'
@@ -15,32 +14,21 @@ export default function Icon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: '#0D2818',
-          borderRadius: 7,
+          background: '#0B0C0A',
+          borderRadius: 8,
         }}
       >
-        {/* Inner gold ring hint */}
-        <div
-          style={{
-            position: 'absolute',
-            width: 26,
-            height: 26,
-            borderRadius: 5,
-            border: '1px solid rgba(200, 124, 42, 0.3)',
-            display: 'flex',
-          }}
-        />
+        {/* Simplified S mark representation for favicon */}
         <span
           style={{
-            color: '#C87C2A',
-            fontSize: 19,
-            fontWeight: 900,
+            color: '#C9A56B',
+            fontSize: 18,
+            fontWeight: 600,
             fontFamily: 'serif',
             lineHeight: 1,
-            marginTop: 1,
           }}
         >
-          7
+          S
         </span>
       </div>
     ),
