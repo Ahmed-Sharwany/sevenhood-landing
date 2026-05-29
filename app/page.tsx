@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import StatsStrip from "@/components/StatsStrip";
 import Features from "@/components/Features";
 import AppShowcase from "@/components/AppShowcase";
 import ForDevelopers from "@/components/ForDevelopers";
@@ -12,6 +13,7 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden" style={{ background: "var(--bg)" }}>
       <Navbar />
       <Hero />
+      <StatsStrip />
       <Features />
       <AppShowcase />
       <ForDevelopers />

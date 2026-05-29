@@ -74,17 +74,23 @@ export default function Navbar() {
             className="flex items-center gap-[10px] group shrink-0"
             aria-label="Sevenhood"
           >
-            <SevenMark size={28} color="var(--ink-950)" />
+            <SevenMark size={28} color={isScrolled ? "#C9A56B" : "#C9A56B"} />
             <div className="flex flex-col leading-none">
-                {isAr ? (
+              {isAr ? (
                 <span
-                  className="font-semibold text-[15px] tracking-[-0.025em] text-[--ink-950]"
-                  style={{ fontFamily: "IBM Plex Sans Arabic, sans-serif" }}
+                  className="font-semibold text-[15px] tracking-[-0.025em]"
+                  style={{
+                    fontFamily: "IBM Plex Sans Arabic, sans-serif",
+                    color: isScrolled ? "rgba(251,248,242,0.9)" : "rgba(251,248,242,0.9)",
+                  }}
                 >
                   سابع جار
                 </span>
               ) : (
-                <span className="font-semibold text-[15px] tracking-[-0.025em] text-[--ink-950]">
+                <span
+                  className="font-semibold text-[15px] tracking-[-0.025em]"
+                  style={{ color: isScrolled ? "rgba(251,248,242,0.9)" : "rgba(251,248,242,0.9)" }}
+                >
                   Sevenhood
                 </span>
               )}
@@ -97,8 +103,13 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 text-[13.5px] text-[--fg-muted] hover:text-[--fg] rounded-[var(--r-sm)] hover:bg-[--bg-sunken] transition-all duration-[140ms]"
-                style={isAr ? { fontFamily: "IBM Plex Sans Arabic, sans-serif" } : undefined}
+                className="px-4 py-2 text-[13.5px] rounded-[var(--r-sm)] transition-all duration-[140ms]"
+                style={{
+                  color: "rgba(251,248,242,0.55)",
+                  ...(isAr ? { fontFamily: "IBM Plex Sans Arabic, sans-serif" } : {}),
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(251,248,242,0.9)")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(251,248,242,0.55)")}
               >
                 {link.label}
               </a>
@@ -111,7 +122,7 @@ export default function Navbar() {
             <button
               onClick={() => setLang(isAr ? "EN" : "AR")}
               className="btn btn-quiet btn-sm text-[13px] font-mono tracking-[.06em] uppercase"
-              style={{ fontFamily: "Geist Mono, monospace" }}
+              style={{ fontFamily: "Geist Mono, monospace", color: "rgba(251,248,242,0.45)" }}
             >
               {isAr ? "EN" : "عربي"}
             </button>
@@ -121,8 +132,13 @@ export default function Navbar() {
               href="https://admin.sevenhood.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-ghost btn-sm"
-              style={isAr ? { fontFamily: "IBM Plex Sans Arabic, sans-serif" } : undefined}
+              className="btn btn-sm rounded-full transition-all duration-150"
+              style={{
+                color: "rgba(251,248,242,0.7)",
+                border: "1.5px solid rgba(251,248,242,0.14)",
+                background: "rgba(251,248,242,0.05)",
+                ...(isAr ? { fontFamily: "IBM Plex Sans Arabic, sans-serif" } : {}),
+              }}
             >
               {isAr ? "وحدة تحكم المشغل" : "Operator Console"}
             </a>
@@ -130,8 +146,13 @@ export default function Navbar() {
             {/* Primary CTA */}
             <a
               href="#download"
-              className="btn btn-primary btn-sm"
-              style={isAr ? { fontFamily: "IBM Plex Sans Arabic, sans-serif" } : undefined}
+              className="btn btn-sm rounded-full font-semibold transition-all duration-150 hover:-translate-y-0.5"
+              style={{
+                background: "linear-gradient(135deg, #C9A56B, #A88349)",
+                color: "#0B0C0A",
+                boxShadow: "0 4px 16px rgba(201,165,107,0.3)",
+                ...(isAr ? { fontFamily: "IBM Plex Sans Arabic, sans-serif" } : {}),
+              }}
             >
               {isAr ? "ابدأ الآن" : "Get Started"}
             </a>
@@ -139,24 +160,28 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden w-9 h-9 flex flex-col justify-center items-center gap-[5px] rounded-[var(--r-sm)] hover:bg-[--bg-sunken] transition-colors"
+            className="md:hidden w-9 h-9 flex flex-col justify-center items-center gap-[5px] rounded-[var(--r-sm)] transition-colors"
+            style={{ background: "rgba(251,248,242,0.06)" }}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
             <span
-              className={`block w-5 h-[1.5px] bg-[--fg] rounded-full transition-all duration-200 origin-center ${
+              className={`block w-5 h-[1.5px] rounded-full transition-all duration-200 origin-center ${
                 mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""
               }`}
+              style={{ background: "rgba(251,248,242,0.8)" }}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-[--fg] rounded-full transition-all duration-200 ${
+              className={`block w-5 h-[1.5px] rounded-full transition-all duration-200 ${
                 mobileOpen ? "opacity-0" : ""
               }`}
+              style={{ background: "rgba(251,248,242,0.8)" }}
             />
             <span
-              className={`block w-5 h-[1.5px] bg-[--fg] rounded-full transition-all duration-200 origin-center ${
+              className={`block w-5 h-[1.5px] rounded-full transition-all duration-200 origin-center ${
                 mobileOpen ? "-rotate-45 -translate-y-[6.5px]" : ""
               }`}
+              style={{ background: "rgba(251,248,242,0.8)" }}
             />
           </button>
         </div>
